@@ -11,6 +11,7 @@
 
 ```
 react: 18
+React Router: V6
 ```
 
 ## 🔮 Futuro del Proyecto

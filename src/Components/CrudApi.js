@@ -106,34 +106,44 @@ const CrudApi = () => {
           <NavLink to="/santos/agregar" className="active">Agregar</NavLink>
         </header>
         <Routes>
-          <Route path="/santos" ></Route>
-          <Route path="/santos/agregar"></Route>
-          <Route path="/santos/editar/:id"></Route>
-          <Route path ="*" element={<Error404/>} />
+          <Route path="/santos" element={
+            <article className="grid-1-2">
+              {loading && <Loader />}
+              {error && (
+                <Message
+                  msg={`Error ${error.status}: ${error.statusText}`}
+                  bgColor="#dc3545"
+                />
+              )}
+              {db && (
+                <CrudTable
+                  data={db}
+                  setDataToEdit={setDataToEdit}
+                  deleteData={deleteData}
+                />
+              )}
+            </article>
+          }>
+          </Route>
+          <Route path="/santos/agregar" element={
+            <CrudForm
+              createData={createData}
+              updateData={updateData}
+              dataToEdit={dataToEdit}
+              setDataToEdit={setDataToEdit}
+            />}>
+          </Route>
+          <Route path="/santos/editar/:id" element={
+            <CrudForm
+              createData={createData}
+              updateData={updateData}
+              dataToEdit={dataToEdit}
+              setDataToEdit={setDataToEdit}
+            />}>
+          </Route>
+          <Route path="/santos/*" element={<Error404 />} />
         </Routes>
       </HashRouter>
-      <article className="grid-1-2">
-        <CrudForm
-          createData={createData}
-          updateData={updateData}
-          dataToEdit={dataToEdit}
-          setDataToEdit={setDataToEdit}
-        />
-        {loading && <Loader />}
-        {error && (
-          <Message
-            msg={`Error ${error.status}: ${error.statusText}`}
-            bgColor="#dc3545"
-          />
-        )}
-        {db && (
-          <CrudTable
-            data={db}
-            setDataToEdit={setDataToEdit}
-            deleteData={deleteData}
-          />
-        )}
-      </article>
     </div>
   );
 };
